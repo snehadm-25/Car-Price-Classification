@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Car Price Classifier</h1>
+        <p class="subtitle">Predict the price category of your car using Machine Learning</p>
+
+        {% if prediction %}
+        <div class="prediction-card">
+            <h2>Estimated Price Category</h2>
+            <div class="prediction-value {{ prediction }}">{{ prediction }}</div>
+        </div>
+        {% endif %}
+
+        <div class="price-guide">
+            Guide: Budget (<$30k) | Mid-Range ($30k-$60k) | Premium ($60k-$90k) | Luxury (>$90k)
+        </div>
+
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="Brand">Brand</label>
+                <select name="Brand" id="Brand" required>
+                    {% for opt in options.Brand %}
+                    <option value="{{ opt }}" {% if input_data and input_data.Brand==opt %}selected{% endif %}>{{ opt }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Manufacture_Year">Manufacture Year</label>
+                <input type="number" name="Manufacture_Year" id="Manufacture_Year" min="2000" max="2026"
+                    value="{{ input_data.Manufacture_Year if input_data else 2020 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Body_Type">Body Type</label>
+                <select name="Body_Type" id="Body_Type" required>
+                    {% for opt in options.Body_Type %}
+                    <option value="{{ opt }}" {% if input_data and input_data.Body_Type==opt %}selected{% endif %}>{{
+                        opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Fuel_Type">Fuel Type</label>
+                <select name="Fuel_Type" id="Fuel_Type" required>
+                    {% for opt in options.Fuel_Type %}
+                    <option value="{{ opt }}" {% if input_data and input_data.Fuel_Type==opt %}selected{% endif %}>{{
+                        opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Transmission">Transmission</label>
+                <select name="Transmission" id="Transmission" required>
+                    {% for opt in options.Transmission %}
+                    <option value="{{ opt }}" {% if input_data and input_data.Transmission==opt %}selected{% endif %}>{{
+                        opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Engine_CC">Engine CC</label>
+                <input type="number" name="Engine_CC" id="Engine_CC" min="500" max="6000"
+                    value="{{ input_data.Engine_CC if input_data else 2000 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Horsepower">Horsepower</label>
+                <input type="number" name="Horsepower" id="Horsepower" min="50" max="1000"
+                    value="{{ input_data.Horsepower if input_data else 200 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Mileage_km_per_l">Mileage (km/l)</label>
+                <input type="number" name="Mileage_km_per_l" id="Mileage_km_per_l" min="5" max="40"
+                    value="{{ input_data.Mileage_km_per_l if input_data else 15 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Price_USD">Price (USD)</label>
+                <input type="number" name="Price_USD" id="Price_USD" min="1000" max="200000"
+                    value="{{ input_data.Price_USD if input_data else 50000 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Manufacturing_Country">Manufacturing Country</label>
+                <select name="Manufacturing_Country" id="Manufacturing_Country" required>
+                    {% for opt in options.Manufacturing_Country %}
+                    <option value="{{ opt }}" {% if input_data and input_data.Manufacturing_Country==opt %}selected{%
+                        endif %}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Car_Age">Car Age</label>
+                <input type="number" name="Car_Age" id="Car_Age" min="0" max="30"
+                    value="{{ input_data.Car_Age if input_data else 5 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="HP_per_CC">HP per CC</label>
+                <input type="number" step="0.001" name="HP_per_CC" id="HP_per_CC"
+                    value="{{ input_data.HP_per_CC if input_data else 0.1 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Age_Category">Age Category</label>
+                <select name="Age_Category" id="Age_Category" required>
+                    {% for opt in options.Age_Category %}
+                    <option value="{{ opt }}" {% if input_data and input_data.Age_Category==opt %}selected{% endif %}>{{
+                        opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Efficiency_Score">Efficiency Score</label>
+                <input type="number" step="0.01" name="Efficiency_Score" id="Efficiency_Score"
+                    value="{{ input_data.Efficiency_Score if input_data else 0.5 }}" required>
+            </div>
+
+            <button type="submit">Classify Car Price</button>
+        </form>
+    </div>
+</body>
+
+</html>

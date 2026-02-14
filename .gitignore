@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+
+# Model Artifacts (Keeping them since they are small and needed for the app)
+# *.joblib 
+
+# Temporary Scripts
+test_model_preds.py
+test_app_post.py
+test_app_defaults.py
+
+# System
+.DS_Store
+Thumbs.db
+
+# Visualizations (Keeping them for the README/Walkthrough)
+# static/plots/
